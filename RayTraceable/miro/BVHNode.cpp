@@ -9,32 +9,44 @@ unsigned long long BVHNode::rayTri = 0;
 unsigned long long BVHNode::rayTotal = 0;
 
 
-inline float min( float a, float b, float c ) {
-  if( a < b ) {
-    if( a < c ) return a;
+inline float min( float a, float b, float c )
+{
+    if( a < b )
+    {
+        if( a < c ) return a;
+        return c;
+    }
+    if( b < c )
+    {
+        return b;
+    }
     return c;
-  }
-  if( b < c ) return b;
-  return c;
 }
-inline float max( float a, float b, float c ) {
-  if( a > b ) {
-    if( a > c ) return a;
+
+inline float max( float a, float b, float c )
+{
+    if( a > b ) {
+        if( a > c ) return a;
+        return c;
+    }
+    if( b > c ) 
+    {
+        return b;
+    }
     return c;
-  }
-  if( b > c ) return b;
-  return c;
 }
+
 inline void swap(float & a, float & b) {
-  float tmp = a;
-  a = b;
-  b = tmp;
+    float tmp = a;
+    a = b;
+    b = tmp;
 }
+
 BVHNode::BVHNode() : plane_position(0), m_axis(AXIS_ERROR), is_leaf(false),
           left(NULL), right(NULL), m_boxmin(Vector3()), m_boxmax(Vector3()) {
-  objects = new vector<Object *>();
-  m_minCost = numeric_limits<float>::infinity();
-  indeedleaf = false;
+    objects = new vector<Object *>();
+    m_minCost = numeric_limits<float>::infinity();
+    indeedleaf = false;
 }
 
 BVHNode::~BVHNode() {

@@ -20,10 +20,9 @@ Sphere::renderGL()
     glPopMatrix();
 }
 
-bool
-Sphere::intersect(HitInfo& result, const Ray& ray,
-                  float tMin, float tMax)
+bool Sphere::intersect(HitInfo& result, const Ray& ray, float tMin, float tMax, bool shadow)
 {
+    if( shadow && !m_material->shadowable() ) return false;
     const Vector3 toO = ray.o - m_center; 
 
     const float a = ray.d.length2(); 
@@ -63,3 +62,7 @@ Sphere::intersect(HitInfo& result, const Ray& ray,
 
     return true;
 }
+
+Vector3 Sphere::getCentroid() { return m_center; }
+Vector3 Sphere::getMin() { return m_center - Vector3(m_radius); }
+Vector3 Sphere::getMax() { return m_center + Vector3(m_radius); }

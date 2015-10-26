@@ -1,19 +1,26 @@
-#ifndef CSE168_BVH_H_INCLUDED
-#define CSE168_BVH_H_INCLUDED
+#ifndef BVH_H
+#define BVH_H
 
 #include "Miro.h"
 #include "Object.h"
+#include "BVHNode.h"
 
 class BVH
 {
-public:
-    void build(Objects * objs);
+    public:
+        ~BVH();
 
-    bool intersect(HitInfo& result, const Ray& ray,
-                   float tMin = 0.0f, float tMax = MIRO_TMAX) const;
+        void build(Objects * objs);
 
-protected:
-    Objects * m_objects;
+        bool intersect(HitInfo& result, const Ray& ray,
+        float tMin = 0.0f, float tMax = MIRO_TMAX, bool shadow = false) const;
+        
+        BVHNode * root;
+        //static int rayTotal;
+        //static void resetStats() { rayTotal = 0; }
+
+    protected:
+        Objects * m_objects;
 };
 
-#endif // CSE168_BVH_H_INCLUDED
+#endif // BVH_H
